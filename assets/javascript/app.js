@@ -1,53 +1,19 @@
-// a) Title and button to start game
-
-// b) first question and choices pops up with time remaining starting at 30 seconds
-
-// c) css hover property on answers 
-
-// d) when you select an answer, it stops the timer, and replaces the question&answer options with an image and html that either says correct or incorrect or out of time and gives correct answer
-
-// e) after a few seconds, it the image is replaced with the second question, answer options, and time remaining
-
 
 $( document ).ready(function() {
 
-console.log(questions);
 
-    // console.log( "ready!" );
-
-
-        // GLOBAL VARIABLES
-
-        var timeremaining = 30;
-        var question = 0;
-        // setInterval('#timer', 3000);
-
-        // CLICK FUNCTIONS
-
-        $( "#start" ).click(function() {
+      $( "#start" ).click(function() {
 
           $(this).hide();
-          game.start();
-          });
+            game.start();
+       });
 
-        $( "#resetgame" ).click(function() {
+      $( "#resetgame" ).click(function() {
             game.reset();
            });
 
 
-        // (we are going to append the questions to the page!! you must write box.append)
-//    box.append('<h3>Correct Answers: ' + game.correct + '</h3>');    
-//            box.append('<h3>Incorrect Answers: ' + game.incorrect + '</h3>');    
-//             box.append('<h3>Unanswered: ' + (questions.length - (game.incorrect + game.correct)) + '</h3>');    
-//             box.append('<br><button id="start-over">Start Over?</button>');
-
-// });
-
-  // console.log(questions[0].question);
-
-        // QUESTIONS
-
-        var questions = [
+    var questions = [
         //Question 1
           {
             'answer': 1,
@@ -94,18 +60,13 @@ console.log(questions);
 
         }
 
-        ];
+    ];
 
 
-        // for (var i = 0; i < questions.length; i++) { 
+    var timeremaining = 30;
+    var question = 0;
 
-        // console.log(questions[i].question);
-
-        // }
-
-
-
-        var game = {
+    var game = {
 
           // timer: 0,
           // Questions: questions,
@@ -113,40 +74,44 @@ console.log(questions);
           // correct: 0,
           // incorrect: 0,
 
-
-
           start: function() {
 
-            // var number = 30;
+            var number = 30;
 
-            // function run(){
-            //   counter = setInterval (increment, 1000);
+            function run(){
+              counter = setInterval (increment, 1000);
 
-            // }
+            }
 
-            // function increment(){
-            //   number--;
-            //   $("#timer").html('<h2>' + number + '</h2>');
-            //   if (number === 0) {
-            //     stop();
-            //   }
-            // }
-            //   function stop () {
-            //       clearInterval(counter);
-            //   }
+            function increment(){
+              number--;
+              $("#timer").html('<h2>' + number + '</h2>');
+              if (number === 0) {
+                stop();
+              }
+            }
+              function stop () {
+                  clearInterval(counter);
+              }
 
-            //   run();
+              run();
 
-            //   $("#questions").html("HELLLOOOO");
-            //   $("#options").html("I WILL REMEMBAAAAH");
+              $("#questions").html(questions[0].question);
 
+              var answerChoices = "<div> ";
+
+              for (i = 0; i < questions[0].options.length; i++) { 
+               answerChoices+='<h2 id= "choice' + i + '">' + questions[0].options[i] + '</h2></br>';
+                }
+
+                answerChoices+= "</div>";
+              $("#options").html(answerChoices);
 
             }
 
 
           }
 });
-
 
 
          
