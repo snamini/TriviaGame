@@ -101,20 +101,105 @@ $( document ).ready(function() {
               var answerChoices = "<div> ";
 
               for (i = 0; i < questions[0].options.length; i++) { 
-               answerChoices+='<h2 id= "choice' + i + '">' + questions[0].options[i] + '</h2></br>';
+               answerChoices+='<h2 class="choice" id= "' + i + '">' + questions[0].options[i] + '</h2></br>';
                 }
 
                 answerChoices+= "</div>";
-              $("#options").html(answerChoices);
+              $(".choice").click(function() {
+                if ($(this).attr('id') == questions[0].answer)
+                  alert("correct")
+                  currentQuestion++;
+                  correct++;
+                game.nextQuestion();
+
+                  // game.correctAnswer() //to be defined
+                }
+
+              }
+              else {
+                 alert("incorrect")
+                currentQuestion++;
+                incorrect++;
+                game.nextQuestion();
+                // game.wrongAnswer(); //to be defined
+              }
+
+            });
 
             }
 
+          }
+
+
+nextQuestion: function() {
+
+            var number = 30;
+
+            function run(){
+              counter = setInterval (increment, 1000);
+
+            }
+
+            function increment(){
+              number--;
+              $("#timer").html('<h2>' + number + '</h2>');
+              if (number === 0) {
+                stop();
+              }
+            }
+              function stop () {
+                  clearInterval(counter);
+              }
+
+              run();
+
+              $("#questions").html(questions[currentQuestion].question);
+
+              var answerChoices = "<div> ";
+
+              for (i = 0; i < questions[currentQuestion].options.length; i++) { 
+               answerChoices+='<h2 class="choice" id= "' + i + '">' + questions[0].options[i] + '</h2></br>';
+                }
+
+                answerChoices+= "</div>";
+              $(".choice").click(function() {
+                if ($(this).attr('id') == questions[currentQuestion].answer)
+                  alert("correct")
+                  currentQuestion++;
+                  correct++;
+               
+
+                  // game.correctAnswer() //to be defined
+                }
+
+              }
+              else {
+                 alert("incorrect")
+                currentQuestion++;
+                incorrect++;
+                game.nextQuestion();
+                // game.wrongAnswer(); //to be defined
+              }
+
+            });
+
+            }
 
           }
+
+          
+
+      reset: function() {
+            
+            // time remaining
+            // // questions : go to the first question
+            // clear all answers
+
+          },
+
+          
 });
 
-
-         
 
 
 
