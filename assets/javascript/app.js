@@ -1,254 +1,171 @@
 
-$( document ).ready(function() {
+var panel = $('#quiz-area');
+var countStartNumber = 30;
 
 
-      $( "#start" ).click(function() {
+///////////////////////////////////////////////////////////////////////////////
 
-          $(this).hide();
-            game.start();
-       });
+//CLICK EVENTS
 
-      $( "#resetgame" ).click(function() {
-            game.reset();
-           });
+///////////////////////////////////////////////////////////////////////////////
 
-
-    var questions = [
-        //Question 1
-          {
-            'answer': 1,
-            'question': 'Which one of these is a scary movie?',
-            'options': ['Finding Nemo', 'The Ring', 'Aladdin', "Half Baked"],
-            'image': "assets/images/thering"
-
-          },
-
-
-        //Question 2  
-          {
-            'answer': 0,
-            'question': 'You will have bad luck if a _____ crosses your path?',
-            'options': ['Black Cat', 'Giraffe', 'Squirrel', 'Dog'],
-            'image': "assets/images/meow"
-
-          },
-
-        //Question 3
-          {
-            'answer': 3,
-            'question': 'Which one of these movies involves witches?',
-            'options': ['Road Trip', 'Scary Movie II', 'The Cat In The Hat', 'Hocus Pocus'],
-            'image': "assets/images/meow"
-
-          },  
-
-        //Question 4
-        {
-          'answer': 2,
-          'question': 'Who appears in the mirror when you call her name three times?',
-          'options': ['Paris Hilton', 'Beatle Juice', 'Bloody Mary', 'Jimbo'],
-          'image': "assets/images/meow"
-
-        },
-
-        //Question 5
-        {
-          'answer': 0,
-          'question': 'What movie involves a creepy lookin robot in a wheelchair?',
-          'options': ['Saw', 'Paulie', 'Sex in the City', 'Star Wars'],
-          'image': "assets/images/meow"
-
-        }
-
-    ];
-
-
-    var timeremaining = 30;
-    var question = 0;
-
-    var game = {
-
-          // timer: 0,
-          // Questions: questions,
-          // currentQuestion: 0,
-          // correct: 0,
-          // incorrect: 0,
-
-          start: function() {
-
-            var number = 30;
-
-            function run(){
-              counter = setInterval (increment, 1000);
-
-            }
-
-            function increment(){
-              number--;
-              $("#timer").html('<h2>' + number + '</h2>');
-              if (number === 0) {
-                stop();
-              }
-            }
-              function stop () {
-                  clearInterval(counter);
-              }
-
-              run();
-
-              $("#questions").html(questions[0].question);
-
-              var answerChoices = "<div> ";
-
-              for (i = 0; i < questions[0].options.length; i++) { 
-               answerChoices+='<h2 class="choice" id= "' + i + '">' + questions[0].options[i] + '</h2></br>';
-                }
-
-                answerChoices+= "</div>";
-              $(".choice").click(function() {
-                if ($(this).attr('id') == questions[0].answer)
-                  alert("correct")
-                  currentQuestion++;
-                  correct++;
-                game.nextQuestion();
-
-                  // game.correctAnswer() //to be defined
-                }
-
-              }
-              else {
-                 alert("incorrect")
-                currentQuestion++;
-                incorrect++;
-                game.nextQuestion();
-                // game.wrongAnswer(); //to be defined
-              }
-
-            });
-
-            }
-
-          }
-
-
-nextQuestion: function() {
-
-            var number = 30;
-
-            function run(){
-              counter = setInterval (increment, 1000);
-
-            }
-
-            function increment(){
-              number--;
-              $("#timer").html('<h2>' + number + '</h2>');
-              if (number === 0) {
-                stop();
-              }
-            }
-              function stop () {
-                  clearInterval(counter);
-              }
-
-              run();
-
-              $("#questions").html(questions[currentQuestion].question);
-
-              var answerChoices = "<div> ";
-
-              for (i = 0; i < questions[currentQuestion].options.length; i++) { 
-               answerChoices+='<h2 class="choice" id= "' + i + '">' + questions[0].options[i] + '</h2></br>';
-                }
-
-                answerChoices+= "</div>";
-              $(".choice").click(function() {
-                if ($(this).attr('id') == questions[currentQuestion].answer)
-                  alert("correct")
-                  currentQuestion++;
-                  correct++;
-               
-
-                  // game.correctAnswer() //to be defined
-                }
-
-              }
-              else {
-                 alert("incorrect")
-                currentQuestion++;
-                incorrect++;
-                game.nextQuestion();
-                // game.wrongAnswer(); //to be defined
-              }
-
-            });
-
-            }
-
-          }
-
-          
-
-      reset: function() {
-            
-            // time remaining
-            // // questions : go to the first question
-            // clear all answers
-
-          },
-
-          
+$(document).on('click', '#start-over', function(e) {
+  game.reset();
 });
 
+$(document).on('click', '.answer-button', function(e) {
+  game.clicked(e);
+});
+
+$(document).on('click', '#start', function(e) {
+  $('#subwrapper').prepend('<h2>Time Remaining: <span id="counter-number">30</span> Seconds</h2>');
+  game.loadQuestion();
+});
+
+///////////////////////////////////////////////////////////////////////////////
+
+
+//Question set
+
+
+///////////////////////////////////////////////////////////////////////////////
+
+var questions = [{
+  question: "What was the first full length CGI movie?",
+  answers: ["A Bug's Life", "Monsters Inc.", "Toy Story", "The Lion King"],
+  correctAnswer: "Toy Story",
+  image:"assets/images/toystory.gif"
+}, {
+  question: "Which of these is NOT a name of one of the Spice Girls?",
+  answers: ["Sporty Spice", "Fred Spice", "Scary Spice", "Posh Spice"],
+  correctAnswer: "Fred Spice",
+  image:"assets/images/spicegirls.gif"
+}, {
+  question: "Which NBA team won the most titles in the 90s?",
+  answers: ["New York Knicks", "Portland Trailblazers", "Los Angeles Lakers", "Chicago Bulls"],
+  correctAnswer: "Chicago Bulls",
+  image:"assets/images/bulls.gif"
+}, {
+  question: 'Which group released the hit song, "Smells Like Teen Spirit"?',
+  answers: ["Nirvana", "Backstreet Boys", "The Offspring", "No Doubt"],
+  correctAnswer: "Nirvana",
+  image:"assets/images/nirvanabark.gif"
+}, {
+  question: 'Which popular Disney movie featured the song, "Circle of Life"?',
+  answers: ["Aladdin", "Hercules", "Mulan", "The Lion King"],
+  correctAnswer: "The Lion King",
+  image:"assets/images/lionking.gif"
+}, {
+  question: 'Finish this line from the Fresh Prince of Bel-Air theme song: "I whistled for a cab and when it came near, the license plate said..."',
+  answers: ["Dice", "Mirror", "Fresh", "Cab"],
+  correctAnswer: "Fresh",
+  image:"assets/images/fresh.gif"
+}, {
+  question: "What was Doug's best friend's name?",
+  answers: ["Skeeter", "Mark", "Zach", "Cody"],
+  correctAnswer: "Skeeter",
+  image:"assets/images/skeeter.gif"
+}, {
+  question: "What was the name of the principal at Bayside High in Saved By The Bell?",
+  answers: ["Mr.Zhou", "Mr.Driggers", "Mr.Belding", "Mr.Page"],
+  correctAnswer: "Mr.Belding",
+  image:"assets/images/belding.gif"
+}];
 
 
 
 
-      //     nextQuestion: function() {
-      //        game.currentQuestion++ 
-      //        console.log(game.Questions[game.currentQuestion])
-      //        // add 1 to current question number ^^
-      //   // get the next question
-      //   // reset timer back to 30s
-      //   // update html with new question
+var game = {
+  questions:questions,
+  currentQuestion:0,
+  counter:countStartNumber,
+  correct:0,
+  incorrect:0,
+  countdown: function(){
+    game.counter--;
+    $('#counter-number').html(game.counter);
 
+    if (game.counter === 0){
+      console.log('TIME UP');
+      game.timeUp();
+    }
+  },
+  loadQuestion: function(){
+    timer = setInterval(game.countdown, 1000);
+    panel.html('<h2>' + questions[this.currentQuestion].question + '</h2>' );
+    for (var i = 0; i<questions[this.currentQuestion].answers.length; i++){
+      panel.append('<button class="answer-button" id="button"' + 'data-name="' + questions[this.currentQuestion].answers[i] + '">' + questions[this.currentQuestion].answers[i]+ '</button>');
+    }
+  },
+  nextQuestion: function(){
+    game.counter = countStartNumber;
+    $('#counter-number').html(game.counter);
+    game.currentQuestion++;
+    game.loadQuestion();
+  },
+  timeUp: function (){
+    clearInterval(timer);
+    $('#counter-number').html(game.counter);
 
-      //   timer !!
+    panel.html('<h2>Out of Time!</h2>');
+    panel.append('<h3>The Correct Answer was: ' + questions[this.currentQuestion].correctAnswer);
+    panel.append('<img src="' + questions[this.currentQuestion].image + '" />');
 
-      //     },
+    if (game.currentQuestion === questions.length - 1){
+      setTimeout(game.results, 3 * 1000);
+    } else {
+      setTimeout(game.nextQuestion, 3 * 1000);
+    }
+  },
+  results: function() {
+    clearInterval(timer);
 
-      //       youWon: function() {
-      //   // replace by using .html with an image tag with some text that says YOU WON THE WHOLE GAME
+    panel.html('<h2>All done, heres how you did!</h2>');
+    $('#counter-number').html(game.counter);
+    panel.append('<h3>Correct Answers: ' + game.correct + '</h3>');
+    panel.append('<h3>Incorrect Answers: ' + game.incorrect + '</h3>');
+    panel.append('<h3>Unanswered: ' + (questions.length - (game.incorrect + game.correct)) + '</h3>');
+    panel.append('<br><button id="start-over">Start Over?</button>');
+  },
+  clicked: function(e) {
+    clearInterval(timer);
 
-      //     },
+    if ($(e.target).data("name") === questions[this.currentQuestion].correctAnswer){
+      this.answeredCorrectly();
+    } else {
+      this.answeredIncorrectly();
+    }
+  },
+  answeredIncorrectly: function() {
+    game.incorrect++;
+    clearInterval(timer);
+    panel.html('<h2>Nope!</h2>');
+    panel.append('<h3>The Correct Answer was: ' + questions[game.currentQuestion].correctAnswer + '</h3>');
+    panel.append('<img src="' + questions[game.currentQuestion].image + '" />');
 
-      //     youLost: function() {
-      //   // replace by using .html with an image tag with some text that says YOU LOST THE WHOLE GAME
+    if (game.currentQuestion === questions.length - 1){
+      setTimeout(game.results, 3 * 1000);
+    } else {
+      setTimeout(game.nextQuestion, 3 * 1000);
+    }
+  },
+  answeredCorrectly: function(){
+    clearInterval(timer);
+    game.correct++;
+    panel.html('<h2>Correct!</h2>');
+    panel.append('<img src="' + questions[game.currentQuestion].image + '" />');
 
-
-      //     },
-
-      //      showScore: function() {
-      //   // replace by using .html with an image tag with some text that says YOU LOST THE WHOLE GAME
-
-
-      //     },
-
-
-      // reset: function() {
-            
-      //       // time remaining
-      //       // // questions : go to the first question
-      //       // clear all answers
-
-      //     },
-
-
-
-      //   }
-
-
-
-      //   // CALL FUNCTION
-
-
+    if (game.currentQuestion === questions.length - 1){
+      setTimeout(game.results, 3 * 1000);
+    } else {
+      setTimeout(game.nextQuestion, 3 * 1000);
+    }
+  },
+  reset: function(){
+    this.currentQuestion = 0;
+    this.counter = countStartNumber;
+    this.correct = 0;
+    this.incorrect = 0;
+    this.loadQuestion();
+  }
+};
